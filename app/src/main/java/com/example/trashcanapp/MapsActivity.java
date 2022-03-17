@@ -34,6 +34,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    // deneme
+    
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
