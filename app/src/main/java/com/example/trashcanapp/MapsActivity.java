@@ -35,7 +35,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
     // deneme
-    
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
