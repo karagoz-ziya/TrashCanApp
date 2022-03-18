@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_google_sign_in.xml" value="0.536" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_maps.xml" value="0.22826086956521738" />
       </map>
     </option>
