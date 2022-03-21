@@ -3,17 +3,18 @@
     package="com.example.trashcanapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TrashCanApp">
+        android:theme="@style/Theme.TrashCanApp"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".GoogleSignInActivity"
+            android:name=".HomeActivity"
             android:exported="false" />
 
         <uses-library
