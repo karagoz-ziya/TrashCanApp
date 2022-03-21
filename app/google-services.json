@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "790107626564",
-    "project_id": "trashcanapp-6e0a7",
-    "storage_bucket": "trashcanapp-6e0a7.appspot.com"
+    "project_number": "604683046025",
+    "project_id": "trashcanapp-344617",
+    "storage_bucket": "trashcanapp-344617.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:790107626564:android:228670c3d33a9d494b3011",
+        "mobilesdk_app_id": "1:604683046025:android:8f037db8917534b7570a58",
         "android_client_info": {
           "package_name": "com.example.trashcanapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "790107626564-ho19sfk6bvbmiuiupfv1p0h24tq745mq.apps.googleusercontent.com",
+          "client_id": "604683046025-rbljrbodc5n854ur0jauudciuqgv43vi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.trashcanapp",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "790107626564-alse404fottghsv92df3rp1rt31to8r3.apps.googleusercontent.com",
+          "client_id": "604683046025-isq3clcbuajbgnf6svemfkg0lnffmqs2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAZghEdnMO4oM9oYb8ujJwcivd7WdO2rCE"
+          "current_key": "AIzaSyASuxzUmj40b49-NfSGimfvsFchj4ztxYQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "790107626564-alse404fottghsv92df3rp1rt31to8r3.apps.googleusercontent.com",
+              "client_id": "604683046025-isq3clcbuajbgnf6svemfkg0lnffmqs2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
