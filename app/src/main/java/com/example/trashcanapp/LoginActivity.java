@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     // TAGS
     private static final String TAG = "GOOGLE_SING_IN_TAG";
-   // Button button;
+
    SignInButton google_sign_in_button;
 
     GoogleSignInOptions gso;
@@ -27,20 +27,12 @@ public class LoginActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "girdi");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        google_sign_in_button = findViewById(R.id.google_sign_in_button);
 
-    gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build();
+        GoogleSignInAction();
 
-    gsc = GoogleSignIn.getClient(this, gso);
-        google_sign_in_button.setOnClickListener(view -> {
-        SignIn();
-    });
         // Configuring map
         /*button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +45,28 @@ public class LoginActivity extends AppCompatActivity  {
         });*/
     }
 
-    private void SignIn() {
+    // Google ile giriş işlemlerinin yapıldığı metod
+    private void GoogleSignInAction(){
+        google_sign_in_button = findViewById(R.id.google_sign_in_button);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        gsc = GoogleSignIn.getClient(this, gso);
+        google_sign_in_button.setOnClickListener(view -> {
+            SignInGoogle();
+        });
+    }
+
+    // Google ile giriş intentinin dispatchlendiği method
+    private void SignInGoogle() {
         Intent intent = gsc.getSignInIntent();
         startActivityForResult(intent, 100);
     }
 
+    // Google ile giriş yapma işlemleri sonucunu yakalayan
+    //daha sonrasında yapılacak işlemleri konfigüre etmeye yarayan method
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,6 +83,7 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
+    //  Anasayfa'ya geçiş için kullanılan method
     private void HomeActivity(){
         finish();
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
