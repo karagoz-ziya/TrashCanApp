@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity  {
     // TAGS
     private static final String TAG = "GOOGLE_SING_IN_TAG";
    // Button button;
-   SignInButton sign_in_button;
+   SignInButton google_sign_in_button;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -31,14 +31,14 @@ public class LoginActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sign_in_button = findViewById(R.id.sign_in_button);
+        google_sign_in_button = findViewById(R.id.google_sign_in_button);
 
     gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build();
 
     gsc = GoogleSignIn.getClient(this, gso);
-        sign_in_button.setOnClickListener(view -> {
+        google_sign_in_button.setOnClickListener(view -> {
         SignIn();
     });
         // Configuring map
