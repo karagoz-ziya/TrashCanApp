@@ -26,9 +26,23 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         name = findViewById(R.id.name);
         mail = findViewById(R.id.mail);
         logout = findViewById(R.id.logout);
+
+        GetGoogleAccountUser();
+        GetFirebaseAccountUser();
+    }
+
+    // Email ile giris yapilan kullanicini bilgilerini almak icin
+    private void GetFirebaseAccountUser() {
+        // Devam edecem -----------------------------------------------------
+    }
+
+    // Google ile giris yapilan kullanicini bilgilerini almak icin
+    private void GetGoogleAccountUser() {
+
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

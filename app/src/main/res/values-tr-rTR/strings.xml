@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Recycle Mapp</string>
+    <string name="edit_text_hint_email">Email</string>
+    <string name="edit_text_hint_password">Şifre</string>
+    <string name="login_button">Giriş Yap</string>
+    <string name="dont_have_account_text">Henüz hesabın yok mu? <b>Buraya dokun!</b></string>
+    <string name="invalid_email_error">Geçersiz email formatı</string>
+    <string name="empty_password_error">Şifre girin</string>
+    <string name="password_length_error">Şifre en az 6 karakterden oluşmalıdır.</string>
+    <string name="progress_dialog_please_wait">Lütfen bekleyin</string>
+    <string name="progress_dialog_creating_account">Hesabınız oluşturuluyor...</string>
+    <string name="account_created_succesfuly">Hesap oluşturulmuştur</string>
+</resources>

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -21,6 +23,7 @@ public class LoginActivity extends AppCompatActivity  {
     private static final String TAG = "GOOGLE_SING_IN_TAG";
 
    SignInButton google_sign_in_button;
+   TextView signupTV;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -29,20 +32,16 @@ public class LoginActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        signupTV = findViewById(R.id.sign_up_text_view);
 
         GoogleSignInAction();
-
-        // Configuring map
-        /*button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        signupTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
+                startActivity( new Intent(LoginActivity.this, SignupActivity.class));
             }
-        });*/
+        });
+
     }
 
     // Google ile giriş işlemlerinin yapıldığı metod
