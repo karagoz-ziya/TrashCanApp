@@ -54,9 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            Integer value = extras.getInt("signInMethod");
+            Integer signInMethod = extras.getInt("signInMethod");
 
-            switch(value) {
+            switch(signInMethod) {
                 case 0:
                     GetFirebaseAccountUser();
                     break;
