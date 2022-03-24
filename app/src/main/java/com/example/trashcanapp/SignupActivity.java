@@ -1,6 +1,7 @@
 package com.example.trashcanapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -23,11 +24,10 @@ public class SignupActivity extends AppCompatActivity {
 
     //ViewBinding
     ActivitySignupBinding binding;
-
     FirebaseAuth firebaseAuth;
 
-    // progress dialog
-    private ProgressDialog progressDialog;
+    // actionbar
+    private ActionBar actionBar;
 
     private String email = "", password = "";
     @Override
@@ -36,14 +36,13 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // configure action bar, title, backbutton
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.signup_button));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         firebaseAuth = FirebaseAuth.getInstance();
-
-        // configure progress
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle(getString(R.string.progress_dialog_please_wait));
-        progressDialog.setMessage(getString(R.string.progress_dialog_creating_account));
-        progressDialog.setCanceledOnTouchOutside(false);
-
 
         binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +52,11 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed(); // geri butonuna basildiginda bir onceki aktivitye gider
+        return super.onSupportNavigateUp();
+    }
 
     private void validateData() {
         email= binding.emailEditText.getText().toString().trim();
@@ -79,13 +82,13 @@ public class SignupActivity extends AppCompatActivity {
 
     private void firebaseEmailSignUp() {
         // progressi gosteren kod
-        progressDialog.show();
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 // signup basarili ise buraya girer
-                progressDialog.dismiss();
+                binding.progressBar.setVisibility(View.INVISIBLE);
 
                 // user info alan kod
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -104,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // signup basarili degil ise buraya girer
-                progressDialog.dismiss();
+                binding.progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(SignupActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

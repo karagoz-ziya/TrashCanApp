@@ -11,4 +11,6 @@
     <string name="progress_dialog_please_wait">Lütfen bekleyin</string>
     <string name="progress_dialog_creating_account">Hesabınız oluşturuluyor...</string>
     <string name="account_created_succesfuly">Hesap oluşturulmuştur</string>
+    <string name="signup_button">Hesap Oluştur</string>
+    <string name="logged_in_succesfuly">Başarılı Giriş</string>
 </resources>

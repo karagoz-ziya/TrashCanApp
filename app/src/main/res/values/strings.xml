@@ -3,7 +3,8 @@
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="edit_text_hint_email"> Email</string>
     <string name="edit_text_hint_password"> Password</string>
-    <string name="login_button"> Login</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Signup</string>
     <string name="dont_have_account_text">Don\'t have an account yet? <b>Tap here!</b></string>
     <string name="invalid_email_error">Invalid email format</string>
     <string name="empty_password_error">Enter password</string>
@@ -11,5 +12,7 @@
     <string name="progress_dialog_please_wait">Please wait</string>
     <string name="progress_dialog_creating_account">Creating your account...</string>
     <string name="account_created_succesfuly">Account created</string>
+    <string name="logged_in_succesfuly">Logged in</string>
+
 
 </resources>
