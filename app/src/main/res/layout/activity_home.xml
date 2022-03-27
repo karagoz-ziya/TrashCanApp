@@ -42,19 +42,29 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:id="@+id/mail"/>
+
     <Button
+        android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/mail"
-        android:padding="10dp"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
-        android:textSize="22sp"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/black"
+        android:padding="10dp"
         android:text="Log Out"
-        android:layout_margin="10dp"
-        android:layout_marginTop="200dp"
-        android:id="@+id/logout"
-        />
+        android:textColor="@color/white"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logout"
+
+        android:text="Button" />
 </RelativeLayout>

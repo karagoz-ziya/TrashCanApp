@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Map;
+
 public class HomeActivity extends AppCompatActivity {
 
     // TAGS
@@ -64,10 +66,14 @@ public class HomeActivity extends AppCompatActivity {
                     GetGoogleAccountUser();
                     break;
                 default:
-                    // code block
             }
         }
-
+        binding.mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+            }
+        });
     }
 
     // Email ile giris yapilan kullanicini bilgilerini almak icin
