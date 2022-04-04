@@ -108,14 +108,40 @@ public class SignupActivity extends AppCompatActivity {
                 // user info alan kod
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 String email = firebaseUser.getEmail();
+                userID = firebaseUser.getUid();
+                nameSurname = binding.nameSurnameEditText.getText().toString();
+                writeNewUser(userID, nameSurname);
                 Toast.makeText(
                         SignupActivity.this,
                         getString(R.string.account_created_succesfuly) + "\n" + email,
                         Toast.LENGTH_SHORT);
 
                 // HomeActivity yonlendirmesi
-                startActivity(new Intent(SignupActivity.this, HomeActivity.class));
-                finish();
+                binding.progressBar.setVisibility(View.VISIBLE);
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        // login basarili
+                        // kullanici bilgilerini getir
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        String email = firebaseUser.getEmail();
+
+                        Toast.makeText(SignupActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
+
+                        // HomeActivity yonlendirmesi
+                        Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
+                        intent.putExtra("signInMethod", 0);// home activity kisminda hangi signin metodu ile islem yapilacagini
+                        startActivity(intent);                        // belirlemek icin kkullanilir (0 --> firebase email signIn)
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // login basarisiz, hatayi goster
+                        binding.progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(SignupActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -129,7 +155,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void writeNewUser(String userId, String nameSurname) {
-        User user = new User(nameSurname);
+        User user = new User( userId, nameSurname);
         CollectionReference dbUser = db.collection("User");
         dbUser.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

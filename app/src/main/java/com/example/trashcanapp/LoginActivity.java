@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.trashcanapp.databinding.ActivityLoginBinding;
+import com.example.trashcanapp.dbmodel.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,6 +26,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity  {
 
@@ -45,7 +49,7 @@ public class LoginActivity extends AppCompatActivity  {
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private FirebaseAuth firebaseAuth;
-
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class LoginActivity extends AppCompatActivity  {
         // configure action bar, title, backbutton
         actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.login_button));
+
+        // get instance of firestore db
+        db = FirebaseFirestore.getInstance();
 
 
         GoogleSignInAction();
@@ -178,6 +185,12 @@ public class LoginActivity extends AppCompatActivity  {
             try {
                 task.getResult(ApiException.class);
                 String email = task.getResult().getEmail();
+                String userID = task.getResult().getId();
+                String nameSurname = task.getResult().getDisplayName();
+
+                // Google ile kayit olan kullanicilari database'e kaydetmek icin kullanilan method
+                //writeNewUser(userID, nameSurname);
+
 
                 // HomeActivity yonlendirmesi
                 Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
@@ -191,6 +204,24 @@ public class LoginActivity extends AppCompatActivity  {
             }
 
         }
+    }
+
+
+
+    public void writeNewUser(String userId, String nameSurname) {
+        User user = new User( userId, nameSurname);
+        CollectionReference dbUser = db.collection("User");
+        dbUser.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(LoginActivity.this, "Product Added", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
