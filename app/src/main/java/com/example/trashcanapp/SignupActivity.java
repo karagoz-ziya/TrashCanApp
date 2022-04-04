@@ -8,28 +8,39 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.trashcanapp.databinding.ActivitySignupBinding;
+import com.example.trashcanapp.dbmodel.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private static final String TAG = "SIGNUP";
+
     //ViewBinding
-    ActivitySignupBinding binding;
-    FirebaseAuth firebaseAuth;
+    private ActivitySignupBinding binding;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
 
     // actionbar
     private ActionBar actionBar;
 
-    private String email = "", password = "";
+    private String email = "", password = "" , nameSurname = "", userID = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +54,16 @@ public class SignupActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validateData();
             }
+        });
+        binding.button.setOnClickListener(view -> {
+            writeNewUser("ali","veli");
         });
     }
 
@@ -112,4 +127,21 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void writeNewUser(String userId, String nameSurname) {
+        User user = new User(nameSurname);
+        CollectionReference dbUser = db.collection("User");
+        dbUser.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(SignupActivity.this, "Product Added", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

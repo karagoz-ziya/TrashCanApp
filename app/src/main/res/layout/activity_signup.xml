@@ -7,6 +7,31 @@
     tools:context=".SignupActivity">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameSurnameTil"
+        android:layout_width="360dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="87dp"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/name_surname_edit_text"
+            android:layout_width="360dp"
+            android:layout_height="40dp"
+            android:background="@color/grey_bright"
+            android:hint="@string/edit_text_hint_name_surname"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textColor="@color/grey_normal"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="317dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTil"
         android:layout_width="360dp"
         android:layout_height="40dp"
@@ -83,4 +108,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="218dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity  {
     private static final String TAG = "GOOGLE_SING_IN_TAG";
 
     // ViewBinding
-    ActivityLoginBinding binding;
+    private ActivityLoginBinding binding;
 
 
 
@@ -42,8 +42,8 @@ public class LoginActivity extends AppCompatActivity  {
     private ActionBar actionBar;
 
 
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
     private FirebaseAuth firebaseAuth;
 
 

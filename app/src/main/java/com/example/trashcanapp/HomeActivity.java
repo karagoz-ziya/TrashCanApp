@@ -36,11 +36,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    GoogleSignInAccount googleAccount;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+    private GoogleSignInAccount googleAccount;
     private FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
