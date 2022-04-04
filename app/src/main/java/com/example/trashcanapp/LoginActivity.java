@@ -89,7 +89,10 @@ public class LoginActivity extends AppCompatActivity  {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null){
             // kullanici onceden giris yapmis
-            startActivity(new Intent(this, HomeActivity.class));
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("signInMethod", 0);
+            startActivity(intent);
+
             finish();
         }
     }
