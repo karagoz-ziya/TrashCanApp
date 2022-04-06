@@ -1,9 +1,11 @@
 package com.example.trashcanapp;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,15 +22,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class LoginActivity extends AppCompatActivity  {
 
@@ -45,11 +51,12 @@ public class LoginActivity extends AppCompatActivity  {
     // actionbar
     private ActionBar actionBar;
 
-
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         // get instance of firestore db
         db = FirebaseFirestore.getInstance();
+        // get instance of firebase auth
 
 
         GoogleSignInAction();
@@ -74,7 +82,7 @@ public class LoginActivity extends AppCompatActivity  {
     // Firebase Email ile giriş işlemlerinin yapıldığı metod
     private void FirebaseSignInAction() {
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
         checkUser();
 
         binding.signUpTextView.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +101,13 @@ public class LoginActivity extends AppCompatActivity  {
     private void checkUser() {
         // kullanici zaten giris yapmis mi
         // oyleyse dogrudan home activitye yonlendir
+        firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null){
             // kullanici onceden giris yapmis
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("signInMethod", 0);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
             finish();
@@ -160,6 +170,7 @@ public class LoginActivity extends AppCompatActivity  {
     // Google ile giriş işlemlerinin yapıldığı metod
     private void GoogleSignInAction(){
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("604683046025-isq3clcbuajbgnf6svemfkg0lnffmqs2.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -181,32 +192,61 @@ public class LoginActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                String email = task.getResult().getEmail();
-                String userID = task.getResult().getId();
-                String nameSurname = task.getResult().getDisplayName();
+            Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+            if(signInAccountTask.isSuccessful()){
+                // When google sign in successful
+                // Initialize string
+                String s="Google sign in successful";
+                // Display Toast
+                Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
+                // Initialize sign in account
+                try {
+                    // Initialize sign in account
+                    GoogleSignInAccount googleSignInAccount=signInAccountTask
+                            .getResult(ApiException.class);
+                    // Check condition
+                    if(googleSignInAccount!=null)
+                    {
+                        // When sign in account is not equal to null
+                        // Initialize auth credential
+                        AuthCredential authCredential= GoogleAuthProvider
+                                .getCredential(googleSignInAccount.getIdToken()
+                                        ,null);
+                        // Check credential
+                        firebaseAuth.signInWithCredential(authCredential)
+                                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        // Check condition
+                                        if(task.isSuccessful())
+                                        {
 
-                // Google ile kayit olan kullanicilari database'e kaydetmek icin kullanilan method
-                //writeNewUser(userID, nameSurname);
+                                            // HomeActivity yonlendirmesi
+                                            Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                            intent.putExtra("signInMethod",1);// home activity kisminda hangi signin metodu ile islem yapilacagini
+                                            startActivity(intent);                       // belirlemek icin kkullanilir (1 --> google signIn)
+                                            finish();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
-
-                // HomeActivity yonlendirmesi
-                Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                intent.putExtra("signInMethod",1);// home activity kisminda hangi signin metodu ile islem yapilacagini
-                startActivity(intent);                       // belirlemek icin kkullanilir (1 --> google signIn)
-                finish();
-            } catch (ApiException e) {
-                Log.i(TAG, String.valueOf(e));
-                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (ApiException e)
+                {
+                    Log.wtf(TAG, String.valueOf(e));
+                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+                }
             }
+
 
         }
     }
-
-
 
     public void writeNewUser(String userId, String nameSurname) {
         User user = new User( userId, nameSurname);

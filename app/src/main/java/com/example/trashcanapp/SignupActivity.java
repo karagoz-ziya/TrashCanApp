@@ -62,9 +62,6 @@ public class SignupActivity extends AppCompatActivity {
                 validateData();
             }
         });
-        binding.button.setOnClickListener(view -> {
-            writeNewUser("ali","veli");
-        });
     }
 
     @Override
@@ -110,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
                 String email = firebaseUser.getEmail();
                 userID = firebaseUser.getUid();
                 nameSurname = binding.nameSurnameEditText.getText().toString();
-                writeNewUser(userID, nameSurname);
+                WriteNewUser(userID, nameSurname);
                 Toast.makeText(
                         SignupActivity.this,
                         getString(R.string.account_created_succesfuly) + "\n" + email,
@@ -154,7 +151,7 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void writeNewUser(String userId, String nameSurname) {
+    public void WriteNewUser(String userId, String nameSurname) {
         User user = new User( userId, nameSurname);
         CollectionReference dbUser = db.collection("User");
         dbUser.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -1,7 +1,9 @@
 <resources>
+    <!-- environmental variables -->
     <string name="app_name">Recycle Mapp</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
 
+    <!-- UI cevirileri -->
     <string name="edit_text_hint_email"> Email</string>
     <string name="edit_text_hint_password"> Password</string>
     <string name="edit_text_hint_name_surname">Name Surname</string>
