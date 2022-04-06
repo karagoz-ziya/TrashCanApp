@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -170,7 +171,7 @@ public class LoginActivity extends AppCompatActivity  {
     // Google ile giriş işlemlerinin yapıldığı metod
     private void GoogleSignInAction(){
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("604683046025-isq3clcbuajbgnf6svemfkg0lnffmqs2.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
 
@@ -205,13 +206,14 @@ public class LoginActivity extends AppCompatActivity  {
                     GoogleSignInAccount googleSignInAccount=signInAccountTask
                             .getResult(ApiException.class);
                     // Check condition
-                    if(googleSignInAccount!=null)
+                    if(googleSignInAccount != null)
                     {
                         // When sign in account is not equal to null
                         // Initialize auth credential
                         AuthCredential authCredential= GoogleAuthProvider
                                 .getCredential(googleSignInAccount.getIdToken()
                                         ,null);
+
                         // Check credential
                         firebaseAuth.signInWithCredential(authCredential)
                                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -220,13 +222,35 @@ public class LoginActivity extends AppCompatActivity  {
                                         // Check condition
                                         if(task.isSuccessful())
                                         {
+                                            // Check if user logged in to google account for the first time
 
-                                            // HomeActivity yonlendirmesi
-                                            Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                            intent.putExtra("signInMethod",1);// home activity kisminda hangi signin metodu ile islem yapilacagini
-                                            startActivity(intent);                       // belirlemek icin kkullanilir (1 --> google signIn)
-                                            finish();
+                                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                            DocumentReference docRef = db.collection("User").document(firebaseUser.getUid());
+                                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+                                                        if(!document.exists()){
+
+                                                            WriteNewUser(firebaseUser.getUid(), signInAccountTask.getResult().getDisplayName());
+                                                        }
+
+                                                            // HomeActivity yonlendirmesi
+                                                            Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                            intent.putExtra("signInMethod",1);// home activity kisminda hangi signin metodu ile islem yapilacagini
+                                                            startActivity(intent);                       // belirlemek icin kkullanilir (1 --> google signIn)
+                                                            finish();
+
+                                                    }
+                                                    else{
+                                                        Log.d(TAG, "get failed with ", task.getException());
+                                                    }
+                                                }
+                                            });
+
+
                                         }
                                         else
                                         {
@@ -248,18 +272,17 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
-    public void writeNewUser(String userId, String nameSurname) {
-        User user = new User( userId, nameSurname);
-        CollectionReference dbUser = db.collection("User");
-        dbUser.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+    public void WriteNewUser(String userId, String nameSurname) {
+        User user = new User(nameSurname);
+        db.collection("User").document(userId).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(LoginActivity.this, "Product Added", Toast.LENGTH_LONG).show();
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.i(TAG, "basarili");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i(TAG, "basarisiz");
             }
         });
     }

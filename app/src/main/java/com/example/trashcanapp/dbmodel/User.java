@@ -5,15 +5,11 @@ import java.util.ArrayList;
 
 public class User {
     private String nameSurname;
-    private String UserID;
     private ArrayList<Object> recycleBinList;
 
-    public User(String userID, String nameSurname) {
+    public User( String nameSurname) {
         this.nameSurname = nameSurname;
-        this.UserID = userID;
     }
-
-
 
 
     public String getNameSurname() {
@@ -24,13 +20,6 @@ public class User {
         this.nameSurname = nameSurname;
     }
 
-    public String getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(String userID) {
-        UserID = userID;
-    }
 
     public ArrayList<Object> getRecycleBinList() {
         return recycleBinList;

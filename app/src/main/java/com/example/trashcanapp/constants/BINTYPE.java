@@ -4,5 +4,6 @@ public enum BINTYPE {
     PLASTIC,
     GLASS,
     CAN,
-    PAPER
+    PAPER,
+    BATTERY
 }
