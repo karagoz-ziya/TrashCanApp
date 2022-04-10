@@ -26,6 +26,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
@@ -98,17 +99,22 @@ public class HomeActivity extends AppCompatActivity {
 
         // Deneme RecycleBin databse kaydedici
         binding.dbButton.setOnClickListener(view -> {
-            startActivity(new Intent(HomeActivity.this, MapsActivity.class));
-
+            //startActivity(new Intent(HomeActivity.this, MapsActivity.class));
+            AddRecycleBinToDB();
         });
 
     }
 
     private void AddRecycleBinToDB() {
         db = FirebaseFirestore.getInstance();
+        Log.i(TAG, "BURAYA DA GIRDIM");
         RecycleBin recycleBin = new RecycleBin();
-        recycleBin.setBinType(BINTYPE.BATTERY);
-        Log.i(TAG,  recycleBin.getBinType().toString());
+        Log.i(TAG, "BURAYA DA GIR");
+        HashMap<BINTYPE, Integer> temp = recycleBin.getBinTypeTrust();
+        Integer count = recycleBin.getBinTypeTrust().get(BINTYPE.BATTERY)+1;
+        temp.put(BINTYPE.BATTERY, count);
+        recycleBin.setBinTypeTrust(temp);
+
         CollectionReference dbUser = db.collection("RecycleBin");
         dbUser.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

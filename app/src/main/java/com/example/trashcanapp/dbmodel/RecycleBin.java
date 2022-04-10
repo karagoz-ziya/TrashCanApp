@@ -1,6 +1,7 @@
 package com.example.trashcanapp.dbmodel;
 
 import android.media.Image;
+import android.util.Log;
 
 import com.example.trashcanapp.constants.BINTYPE;
 import com.google.firebase.firestore.GeoPoint;
@@ -9,10 +10,10 @@ import java.util.HashMap;
 
 public class RecycleBin {
     private GeoPoint geopoint;
-    private BINTYPE binType;
+    private HashMap<BINTYPE, Integer> binTypeTrust;
     private String description;
     private Image photograph;
-    HashMap<String, Integer> reviews = new HashMap<String, Integer>();
+    private HashMap<String, Integer> validity;
 
     public GeoPoint getGeopoint() {
         return geopoint;
@@ -22,12 +23,12 @@ public class RecycleBin {
         this.geopoint = geopoint;
     }
 
-    public BINTYPE getBinType() {
-        return binType;
+    public HashMap<BINTYPE, Integer> getBinTypeTrust() {
+        return binTypeTrust;
     }
 
-    public void setBinType(BINTYPE binType) {
-        this.binType = binType;
+    public void setBinTypeTrust(HashMap<BINTYPE, Integer> binTypeTrust) {
+        this.binTypeTrust = binTypeTrust;
     }
 
     public String getDescription() {
@@ -46,19 +47,25 @@ public class RecycleBin {
         this.photograph = photograph;
     }
 
-    public HashMap<String, Integer> getReviews() {
-        return reviews;
+    public HashMap<String, Integer> getValidity() {
+        return validity;
     }
 
-    public void setReviews(HashMap<String, Integer> reviews) {
-        this.reviews = reviews;
+    public void setValidity(HashMap<String, Integer> validity) {
+        this.validity = validity;
     }
 
     public RecycleBin(){
-        this.reviews.put("star1Count", 0);
-        this.reviews.put("star2Count", 0);
-        this.reviews.put("star3Count", 0);
-        this.reviews.put("star4Count", 0);
-        this.reviews.put("star5Count", 0);
+        HashMap<BINTYPE, Integer> temp = new HashMap<>();
+        for (BINTYPE bin : BINTYPE.values()){
+
+            temp.put(bin, 0);
+
+        }
+        setBinTypeTrust(temp);
+        HashMap<String, Integer> val = new HashMap<>();
+        val.put("exist", 0);
+        val.put("notexist", 0);
+        setValidity(val);
     }
 }
