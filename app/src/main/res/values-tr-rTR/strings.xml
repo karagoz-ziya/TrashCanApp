@@ -14,4 +14,7 @@
     <string name="signup_button">Hesap Oluştur</string>
     <string name="logged_in_succesfuly">Başarılı Giriş</string>
     <string name="edit_text_hint_name_surname">Ad Soyad</string>
+    <string name="gps_network_not_enabled">GPS Açık Değil</string>
+    <string name="open_location_settings">GPS Ayarlarını Aç</string>
+    <string name="Cancel">Geri</string>
 </resources>

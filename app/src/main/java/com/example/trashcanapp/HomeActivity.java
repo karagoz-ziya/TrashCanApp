@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Deneme RecycleBin databse kaydedici
         binding.dbButton.setOnClickListener(view -> {
-            AddRecycleBinToDB();
+            startActivity(new Intent(HomeActivity.this, MapsActivity.class));
 
         });
 

@@ -17,6 +17,9 @@
     <string name="progress_dialog_creating_account">Creating your account...</string>
     <string name="account_created_succesfuly">Account created</string>
     <string name="logged_in_succesfuly">Logged in</string>
+    <string name="gps_network_not_enabled">GPS Network Not Enabled</string>
+    <string name="open_location_settings">Open Location Settings</string>
+    <string name="Cancel">Cancel</string>
 
 
 </resources>
