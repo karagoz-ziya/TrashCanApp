@@ -8,11 +8,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,14 +41,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
+import android.view.View;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 
     private GoogleMap mMap;
     private static  final String TAG = "MAP_TEST";
     private boolean isPermissionGranted = false;
+    private boolean isCameraPermissionGranted = false;
 
+    private static final int pic_id = 1;
+    Button camera_open_id;
+    ImageView click_image_id;
 
     // Location Finder Objects
     FusedLocationProviderClient fusedClient;
@@ -58,9 +66,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        camera_open_id = (Button)findViewById(R.id.camera_button);
+        click_image_id = (ImageView)findViewById(R.id.click_image);
+
         // get current location
         locationWizardry();
-
         // if needed
         openLocationServices();
         // check if GPS permission has been granted
@@ -74,6 +84,60 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    // This method will help to retrieve the image
+    protected void onActivityResult(int requestCode,
+                                    int resultCode,
+                                    Intent data) {
+
+        // Match the request 'pic id with requestCode
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == pic_id) {
+
+            // BitMap is data structure of image file
+            // which store the image in memory
+            Bitmap photo = (Bitmap) data.getExtras()
+                    .get("data");
+
+            // Set the image in imageview for display
+            click_image_id.setImageBitmap(photo);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),permissions[0])==PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),permissions[1])==PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),permissions[2])==PackageManager.PERMISSION_GRANTED){
+            isCameraPermissionGranted = true;
+            allowCamera();
+        }else{
+            ActivityCompat.requestPermissions(MapsActivity.this, permissions, pic_id);
+        }
+    }
+
+    private void allowCamera() {
+        if(isCameraPermissionGranted){
+            camera_open_id.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v)
+                {
+                    // Create the camera_intent ACTION_IMAGE_CAPTURE
+                    // it will open the camera for capture the image
+                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    // Start the activity with camera_intent,
+                    // and request pic id
+                    startActivityForResult(camera_intent, pic_id);
+                }
+            });
+        }
+    }
 
     private void requestGPSPermission() {
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -137,6 +201,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return;
             }
         }
+
     }
 
 
@@ -211,8 +276,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
-
-
     }
 }
-
