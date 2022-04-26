@@ -194,6 +194,7 @@ public class LoginActivity extends AppCompatActivity  {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) {
             Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+
             if(signInAccountTask.isSuccessful()){
                 // When google sign in successful
                 // Initialize string

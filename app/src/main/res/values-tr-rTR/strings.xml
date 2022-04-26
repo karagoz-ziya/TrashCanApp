@@ -17,4 +17,8 @@
     <string name="gps_network_not_enabled">GPS Açık Değil</string>
     <string name="open_location_settings">GPS Ayarlarını Aç</string>
     <string name="Cancel">Geri</string>
+    <string name="fab_menu">Geri Dönüşüm Kutusu Ekle</string>
+    <string name="fab_edit">Tercihleri Düzenle</string>
+    <string name="fab_image">Resim Ekle</string>
+    <string name="fab_send">Kaydet</string>
 </resources>
