@@ -18,7 +18,6 @@
     <string name="open_location_settings">GPS Ayarlarını Aç</string>
     <string name="Cancel">Geri</string>
     <string name="fab_menu">Geri Dönüşüm Kutusu Ekle</string>
-    <string name="fab_edit">Tercihleri Düzenle</string>
-    <string name="fab_image">Resim Ekle</string>
     <string name="fab_send">Kaydet</string>
+    <string name="spinner_gun_prompt">Geri Dönüşüm Kutusu Tipini Seçiniz</string>
 </resources>

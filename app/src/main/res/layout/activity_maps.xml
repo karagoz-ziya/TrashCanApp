@@ -62,25 +62,7 @@
             fab:fab_label="@string/fab_send"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_image"
-            fab:fab_colorNormal="@color/green_normal"
-            fab:fab_colorPressed="@color/green_normal"
-            fab:fab_label="@string/fab_image"
-            fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            fab:fab_colorNormal="@color/green_normal"
-            fab:fab_colorPressed="@color/green_normal"
-            fab:fab_label="@string/fab_edit"
-            fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

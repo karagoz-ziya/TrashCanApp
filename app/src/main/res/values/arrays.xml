@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="bintype">
+        <item>PLASTIC</item>
+        <item>GLASS</item>
+        <item>CAN</item>
+        <item>PAPER</item>
+        <item>BATTERY</item>
+    </array>
+</resources>

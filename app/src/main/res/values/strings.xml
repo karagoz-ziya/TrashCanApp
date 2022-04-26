@@ -20,11 +20,10 @@
     <string name="gps_network_not_enabled">GPS Network Not Enabled</string>
     <string name="open_location_settings">Open Location Settings</string>
     <string name="fab_menu">Add Recycle Bin</string>
-    <string name="fab_edit">Edit Preferences</string>
-    <string name="fab_image">Add image</string>
     <string name="fab_send">Save</string>
-
     <string name="Cancel">Cancel</string>
+    <string name="spinner_gun_prompt">Select Bin Type</string>
+
 
 
 </resources>
