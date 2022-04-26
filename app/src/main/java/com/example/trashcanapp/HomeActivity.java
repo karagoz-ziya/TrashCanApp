@@ -107,16 +107,18 @@ public class HomeActivity extends AppCompatActivity {
 
     private void AddRecycleBinToDB() {
         db = FirebaseFirestore.getInstance();
-        Log.i(TAG, "BURAYA DA GIRDIM");
-        RecycleBin recycleBin = new RecycleBin();
-        Log.i(TAG, "BURAYA DA GIR");
-        HashMap<BINTYPE, Integer> temp = recycleBin.getBinTypeTrust();
-        Integer count = recycleBin.getBinTypeTrust().get(BINTYPE.BATTERY)+1;
-        temp.put(BINTYPE.BATTERY, count);
-        recycleBin.setBinTypeTrust(temp);
 
-        CollectionReference dbUser = db.collection("RecycleBin");
-        dbUser.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+        RecycleBin recycleBin = new RecycleBin();
+
+
+
+
+
+
+
+        CollectionReference dbBin = db.collection("RecycleBin");
+        dbBin.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
 

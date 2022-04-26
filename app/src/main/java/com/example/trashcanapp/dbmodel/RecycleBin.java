@@ -56,16 +56,7 @@ public class RecycleBin {
     }
 
     public RecycleBin(){
-        HashMap<BINTYPE, Integer> temp = new HashMap<>();
-        for (BINTYPE bin : BINTYPE.values()){
 
-            temp.put(bin, 0);
 
-        }
-        setBinTypeTrust(temp);
-        HashMap<String, Integer> val = new HashMap<>();
-        val.put("exist", 0);
-        val.put("notexist", 0);
-        setValidity(val);
     }
 }
