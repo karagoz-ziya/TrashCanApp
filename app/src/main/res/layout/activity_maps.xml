@@ -64,5 +64,20 @@
 
 
     </com.github.clans.fab.FloatingActionMenu>
+    <!-- add Camera Button to open the Camera-->
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="140dp"
+        android:id="@+id/camera_button"
+        android:text="Camera" />
 
+    <!-- add ImageView to display the captured image-->
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_width="350dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="450dp"
+        android:id="@+id/click_image"
+        android:layout_marginBottom="10dp"/>
 </RelativeLayout>
