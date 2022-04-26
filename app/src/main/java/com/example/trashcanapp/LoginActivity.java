@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity  {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null){
             // kullanici onceden giris yapmis
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             intent.putExtra("signInMethod", 0);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -150,8 +150,8 @@ public class LoginActivity extends AppCompatActivity  {
                 String email = firebaseUser.getEmail();
                 Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
 
-                // HomeActivity yonlendirmesi
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                // MapsActivity yonlendirmesi
+                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
                 intent.putExtra("signInMethod", 0);// home activity kisminda hangi signin metodu ile islem yapilacagini
                 startActivity(intent);                        // belirlemek icin kkullanilir (0 --> firebase email signIn)
                 finish();
@@ -236,9 +236,9 @@ public class LoginActivity extends AppCompatActivity  {
                                                             WriteNewUser(firebaseUser.getUid(), signInAccountTask.getResult().getDisplayName());
                                                         }
 
-                                                            // HomeActivity yonlendirmesi
+                                                            // MapsActivity yonlendirmesi
                                                             Toast.makeText(LoginActivity.this, getString(R.string.logged_in_succesfuly) + "\n" + email, Toast.LENGTH_SHORT).show();
-                                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                                                             intent.putExtra("signInMethod",1);// home activity kisminda hangi signin metodu ile islem yapilacagini
                                                             startActivity(intent);                       // belirlemek icin kkullanilir (1 --> google signIn)
                                                             finish();

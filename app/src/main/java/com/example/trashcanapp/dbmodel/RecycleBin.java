@@ -3,14 +3,14 @@ package com.example.trashcanapp.dbmodel;
 import android.media.Image;
 import android.util.Log;
 
-import com.example.trashcanapp.constants.BINTYPE;
+import com.example.trashcanapp.constants.*;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.HashMap;
 
 public class RecycleBin {
     private GeoPoint geopoint;
-    private HashMap<BINTYPE, Integer> binTypeTrust;
+    private HashMap<String, Integer> binTypeTrust;
     private String description;
     private Image photograph;
     private HashMap<String, Integer> validity;
@@ -23,11 +23,11 @@ public class RecycleBin {
         this.geopoint = geopoint;
     }
 
-    public HashMap<BINTYPE, Integer> getBinTypeTrust() {
+    public HashMap<String, Integer> getBinTypeTrust() {
         return binTypeTrust;
     }
 
-    public void setBinTypeTrust(HashMap<BINTYPE, Integer> binTypeTrust) {
+    public void setBinTypeTrust(HashMap<String, Integer> binTypeTrust) {
         this.binTypeTrust = binTypeTrust;
     }
 
@@ -56,7 +56,21 @@ public class RecycleBin {
     }
 
     public RecycleBin(){
-
+        if (this.validity == null){
+            HashMap<String, Integer> vali = new HashMap<>();
+            vali.put("exist", 1);
+            vali.put("notexist", 0);
+            this.setValidity(vali);
+        }
+        if(this.binTypeTrust == null){
+            HashMap<String, Integer> trust = new HashMap<>();
+            trust.put(CONSTANTS.PLASTIC,0);
+            trust.put(CONSTANTS.GLASS,0);
+            trust.put(CONSTANTS.CAN,0);
+            trust.put(CONSTANTS.PAPER,0);
+            trust.put(CONSTANTS.BATTERY,0);
+            this.setBinTypeTrust(trust);
+        }
 
     }
 }

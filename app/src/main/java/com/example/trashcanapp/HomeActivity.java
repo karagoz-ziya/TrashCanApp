@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.trashcanapp.constants.BINTYPE;
+
 import com.example.trashcanapp.databinding.ActivityHomeBinding;
 import com.example.trashcanapp.dbmodel.RecycleBin;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -110,13 +111,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
         RecycleBin recycleBin = new RecycleBin();
-
-
-
-
-
-
-
+        recycleBin.setDescription("deneme1");
+        recycleBin.setGeopoint(new GeoPoint(41,38));
         CollectionReference dbBin = db.collection("RecycleBin");
         dbBin.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
