@@ -52,6 +52,7 @@ public class AddBinActivity extends AppCompatActivity {
     private Bitmap photo;
 
 
+    private boolean isOnCamera = false;
     private boolean isCameraPermissionGranted = false;
     private static final int pic_id = 1;
 
@@ -141,7 +142,10 @@ public class AddBinActivity extends AppCompatActivity {
                         }
                         // set text on textView
                         textView.setText(stringBuilder.toString());
-                        
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("binString", stringBuilder.toString());
+                        editor.putBoolean("isOnCamera", true);
+                        editor.apply();
                     }
                 });
 
@@ -178,8 +182,7 @@ public class AddBinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
+                isOnCamera = true;
                 if(isCameraPermissionGranted){
                     allowCamera();
                 }
@@ -194,9 +197,14 @@ public class AddBinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(stringBuilder != null && photo != null) {
+                    AddRecycleBinToDB(binList, description.getText().toString());
+                    startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
+                }
+                else {
+                    Toast.makeText(AddBinActivity.this, "Must Provide Bin Type and Photo", Toast.LENGTH_SHORT).show();
+                }
 
-                AddRecycleBinToDB(binList, description.getText().toString());
-                startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
             }
         });
 
@@ -218,14 +226,26 @@ public class AddBinActivity extends AppCompatActivity {
             photo = (Bitmap) data.getExtras()
                     .get("data");
 
+
             // Set the image in imageview for display
             click_image_id.setImageBitmap(photo);
+
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Boolean flag = prefs.getBoolean("isOnCamera", false);
+        if(flag){
+            editor.clear();
+            editor.apply();
+        }
+        else{
+            editor.putBoolean("isOnCamera", false);
+        }
 
 
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
