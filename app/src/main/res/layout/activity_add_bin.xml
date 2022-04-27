@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#f2f2f2"
+    android:padding="5dp"
+    android:id="@+id/popup_element"
+    >
+
+    <TextView
+        android:id="@+id/tv_bin_label"
+        android:layout_width="360dp"
+        android:layout_height="18dp"
+        android:labelFor="@+id/spinnerGun"
+        android:text="Bin Type"
+        android:textColor="@color/green_dark" />
+    <TextView
+        android:id="@+id/tv_bin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_bin_label"
+        android:background="@android:drawable/editbox_background"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:drawablePadding="16dp"
+        android:hint="Select Bin Type"
+        android:padding="12dp" />
+
+
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="360dp"
+        android:layout_height="18dp"
+        android:labelFor="@+id/description"
+        android:text="Description"
+        android:textColor="@color/green_dark"
+        android:layout_below="@+id/tv_bin"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptionLabel"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:maxLines="10"
+        android:minLines="3"
+        android:scrollbars="vertical" />
+    <!-- add ImageView to display the captured image-->
+    <ImageView
+        android:id="@+id/click_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/description"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+
+        android:layout_marginBottom="10dp" />
+    <Button
+        android:id="@+id/camera_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:layout_below="@id/description"
+        android:layout_alignLeft="@id/click_image"
+        android:text="Camera" />
+
+
+
+    <Button
+        android:id="@+id/submitBin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="ADD"
+        android:layout_below="@+id/click_image"
+        />
+
+</RelativeLayout>

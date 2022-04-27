@@ -1,5 +1,6 @@
 package com.example.trashcanapp.dbmodel;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.util.Log;
 
@@ -12,7 +13,7 @@ public class RecycleBin {
     private GeoPoint geopoint;
     private HashMap<String, Integer> binTypeTrust;
     private String description;
-    private Image photograph;
+    private String photograph;
     private HashMap<String, Integer> validity;
 
     public GeoPoint getGeopoint() {
@@ -39,11 +40,11 @@ public class RecycleBin {
         this.description = description;
     }
 
-    public Image getPhotograph() {
+    public String getPhotograph() {
         return photograph;
     }
 
-    public void setPhotograph(Image photograph) {
+    public void setPhotograph(String photograph) {
         this.photograph = photograph;
     }
 

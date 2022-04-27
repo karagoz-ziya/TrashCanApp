@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -64,24 +65,12 @@ import java.util.Collections;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private FirebaseFirestore db;
+
     private GoogleMap mMap;
     private static  final String TAG = "MAP_TEST";
     private boolean isPermissionGranted = false;
-    private boolean isCameraPermissionGranted = false;
-    private static final int pic_id = 1;
 
     FloatingActionButton saveButton;
-    TextView textView;
-    Button submitButton;
-    EditText description;
-    Button camera_open_id;
-    ImageView click_image_id;
-
-
-    boolean[] selectedBinType;
-    ArrayList<Integer> binList = new ArrayList<>();
-
 
 
     // Location Finder Objects
@@ -115,136 +104,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // inflate the layout of the popup window
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_window, null);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // access to the elements of popup window
-                submitButton = popupView.findViewById(R.id.submitBin);
-                textView = popupView.findViewById(R.id.tv_bin);
-                description = popupView.findViewById(R.id.description);
-                camera_open_id = (Button)findViewById(R.id.camera_button);
-                click_image_id = (ImageView)findViewById(R.id.click_image);
-
-                selectedBinType = new boolean[binTypeArray.length];
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                // can be used for doing some stuff when touching the popup button
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        return true;
-                    }
-                });
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        // Initialize alert dialog
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-
-                        // set title
-                        builder.setTitle("Select Bin Type");
-
-                        // set dialog non cancelable
-                        builder.setCancelable(false);
-
-                        builder.setMultiChoiceItems(binTypeArray, selectedBinType, new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                                // check condition
-                                if (b) {
-                                    // when checkbox selected
-                                    // Add position  in lang list
-                                    binList.add(i);
-                                    // Sort array list
-                                    Collections.sort(binList);
-                                } else {
-                                    // when checkbox unselected
-                                    // Remove position from binList
-                                    binList.remove(Integer.valueOf(i));
-                                }
-                            }
-                        });
-
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // Initialize string builder
-                                StringBuilder stringBuilder = new StringBuilder();
-                                // use for loop
-                                for (int j = 0; j < binList.size(); j++) {
-                                    // concat array value
-                                    stringBuilder.append(binTypeArray[binList.get(j)]);
-                                    // check condition
-                                    if (j != binList.size() - 1) {
-                                        // When j value  not equal
-                                        // to lang list size - 1
-                                        // add comma
-                                        stringBuilder.append(", ");
-                                    }
-                                }
-                                // set text on textView
-                                textView.setText(stringBuilder.toString());
-
-                            }
-                        });
-
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // dismiss dialog
-                                dialogInterface.dismiss();
-                                Log.i(TAG, binList.toString());
-                            }
-                        });
-                        builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // use for loop
-                                for (int j = 0; j < selectedBinType.length; j++) {
-                                    // remove all selection
-                                    selectedBinType[j] = false;
-                                    // clear language list
-                                    binList.clear();
-                                    // clear text view value
-                                    textView.setText("");
-                                }
-
-                            }
-                        });
-                        // show dialog
-                        builder.show();
-
-                    }
-                });
-
-                submitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.i(TAG, binList.toString());
-                        Log.i(TAG, description.getText().toString());
-                        AddRecycleBinToDB(binList, description.getText().toString());
-                    }
-                });
+                if(currentLoc != null){
+                    Intent intent = new Intent(getBaseContext(), AddBinActivity.class);
+                    //Log.i("ADD_BIN_TEST", currentLoc.toString());
+                    intent.putExtra("lat", currentLoc.getLatitude());
+                    intent.putExtra("longt", currentLoc.getLongitude());
+                    startActivity(intent);
+                }
             }
         });
-
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-    }
 
     private void requestGPSPermission() {
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -384,46 +254,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private void AddRecycleBinToDB(ArrayList<Integer> binlist, String description) {
-        db = FirebaseFirestore.getInstance();
 
-        // Setting the object which will send to db with informations given by he user
-        RecycleBin recycleBin = new RecycleBin();
-        recycleBin.setDescription(description);
-        recycleBin.setGeopoint(new GeoPoint(currentLoc.getLatitude(),currentLoc.getLongitude()));
 
-        CollectionReference dbBin = db.collection("RecycleBin");
-        dbBin.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
 
-                Toast.makeText(MapsActivity.this, "Product Added", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MapsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-    private void allowCamera() {
-        if(isCameraPermissionGranted){
-            camera_open_id.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v)
-                {
-                    // Create the camera_intent ACTION_IMAGE_CAPTURE
-                    // it will open the camera for capture the image
-                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    // Start the activity with camera_intent,
-                    // and request pic id
-                    startActivityForResult(camera_intent, pic_id);
-                }
-            });
-        }
-    }
 
 }
 
