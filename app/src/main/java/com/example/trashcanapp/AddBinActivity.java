@@ -1,8 +1,10 @@
 package com.example.trashcanapp;
 
+import static com.example.trashcanapp.constants.CONSTANTS.MY_PREFS_NAME;
 import static com.example.trashcanapp.constants.CONSTANTS.binTypeArray;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,14 +29,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trashcanapp.constants.CONSTANTS;
 import com.example.trashcanapp.dbmodel.RecycleBin;
+import com.example.trashcanapp.dbmodel.User;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -42,15 +55,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddBinActivity extends AppCompatActivity {
+
+    private final String USER_ID_PREF = "USER_ID_PREF";
     private static  final String TAG = "ADD_BIN_TEST";
     private StringBuilder stringBuilder;
-    private static String MY_PREFS_NAME = "BIN_TYPE_SELECT";
+
     private FirebaseFirestore db;
 
     private Bitmap photo;
 
+    String binRefID;
+    String userIDD;
+    User tempUser;
+    ArrayList<String> tempBinList;
 
     private boolean isOnCamera = false;
     private boolean isCameraPermissionGranted = false;
@@ -79,7 +100,8 @@ public class AddBinActivity extends AppCompatActivity {
         longt = getIntent().getDoubleExtra("longt", 0);
         locat = new GeoPoint(lat, longt);
 
-
+        SharedPreferences prefs = getSharedPreferences(USER_ID_PREF, MODE_PRIVATE);
+         userIDD = prefs.getString("userID", "-1");
 
         // access to the elements of popup window
         submitButton = findViewById(R.id.submitBin);
@@ -199,6 +221,8 @@ public class AddBinActivity extends AppCompatActivity {
 
                 if(stringBuilder != null && photo != null) {
                     AddRecycleBinToDB(binList, description.getText().toString());
+
+                    ChangeUsersBinList();
                     startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
                 }
                 else {
@@ -210,25 +234,48 @@ public class AddBinActivity extends AppCompatActivity {
 
     }
 
+    private void ChangeUsersBinList(){
+        db = FirebaseFirestore.getInstance();
+        CollectionReference dbRef = db.collection("User");
 
+        dbRef.document(userIDD).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null){
+                    tempUser = document.toObject(User.class);
+                    Log.i(TAG, tempUser.getNameSurname());
+                    Log.i(TAG, binRefID);
+                }
+            }
+        });
+        dbRef.document(userIDD).update("recycleBinList", tempBinList).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "DocumentSnapshot successfully updated!");
+            }
+        });
+
+
+    }
 
     // This method will help to retrieve the image
-    protected void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // Match the request 'pic id with requestCode
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pic_id) {
+        if (requestCode == pic_id && resultCode == RESULT_OK) {
 
             // BitMap is data structure of image file
             // which store the image in memory
-            photo = (Bitmap) data.getExtras()
-                    .get("data");
+
+                photo = (Bitmap) data.getExtras().get("data");
 
 
-            // Set the image in imageview for display
-            click_image_id.setImageBitmap(photo);
+                // Set the image in imageview for display
+                click_image_id.setImageBitmap(photo);
+
+
 
         }
     }
@@ -262,14 +309,6 @@ public class AddBinActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-
-
-    }
-
     private void AddRecycleBinToDB(ArrayList<Integer> binlist, String description) {
         db = FirebaseFirestore.getInstance();
 
@@ -300,6 +339,8 @@ public class AddBinActivity extends AppCompatActivity {
         dbBin.add(recycleBin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
+
+                binRefID = documentReference.getId();
 
                 Toast.makeText(AddBinActivity.this, "Product Added", Toast.LENGTH_LONG).show();
             }

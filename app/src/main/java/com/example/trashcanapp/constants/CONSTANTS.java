@@ -3,6 +3,8 @@ package com.example.trashcanapp.constants;
 import java.util.ArrayList;
 
 public class CONSTANTS {
+    static public final String MY_PREFS_NAME = "BIN_TYPE_SELECT";
+
     static public String PLASTIC = "PLASTIC";
     static public String GLASS = "GLASS";
     static public String CAN = "CAN";

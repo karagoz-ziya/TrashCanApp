@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 public class User {
     private String nameSurname;
-    private ArrayList<Object> recycleBinList;
+    private ArrayList<String> recycleBinList;
+
+    public User(){}
 
     public User( String nameSurname) {
         this.nameSurname = nameSurname;
@@ -21,11 +23,11 @@ public class User {
     }
 
 
-    public ArrayList<Object> getRecycleBinList() {
+    public ArrayList<String> getRecycleBinList() {
         return recycleBinList;
     }
 
-    public void setRecycleBinList(ArrayList<Object> recycleBinList) {
+    public void setRecycleBinList(ArrayList<String> recycleBinList) {
         this.recycleBinList = recycleBinList;
     }
 }
