@@ -52,6 +52,17 @@
         fab:menu_shadowYOffset="4dp"
         fab:menu_showShadow="true">
 
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_display_locs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_not_listed_location_24"
+            fab:fab_colorNormal="@color/green_normal"
+            fab:fab_colorPressed="@color/green_normal"
+            fab:fab_label="@string/fab_display_locs"
+            fab:fab_size="mini" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_send"
             android:layout_width="wrap_content"
@@ -61,6 +72,7 @@
             fab:fab_colorPressed="@color/green_normal"
             fab:fab_label="@string/fab_send"
             fab:fab_size="mini" />
+
 
 
     </com.github.clans.fab.FloatingActionMenu>

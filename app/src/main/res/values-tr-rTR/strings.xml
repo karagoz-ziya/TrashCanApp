@@ -20,4 +20,5 @@
     <string name="fab_menu">Geri Dönüşüm Kutusu Ekle</string>
     <string name="fab_send">Kaydet</string>
     <string name="spinner_gun_prompt">Geri Dönüşüm Kutusu Tipini Seçiniz</string>
+    <string name="fab_display_locs">Konumları Görüntüle</string>
 </resources>

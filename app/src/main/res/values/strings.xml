@@ -21,6 +21,7 @@
     <string name="open_location_settings">Open Location Settings</string>
     <string name="fab_menu">Add Recycle Bin</string>
     <string name="fab_send">Save</string>
+    <string name="fab_display_locs">Display Locations</string>
     <string name="Cancel">Cancel</string>
     <string name="spinner_gun_prompt">Select Bin Type</string>
 

@@ -51,13 +51,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,13 +69,17 @@ import java.util.Collections;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private FirebaseFirestore db;
 
     private GoogleMap mMap;
     private static  final String TAG = "MAP_TEST";
     private boolean isPermissionGranted = false;
 
     FloatingActionButton saveButton;
+    FloatingActionButton displayLocButton;
+    private  Boolean displayFlag = false;
 
+    ArrayList<GeoPoint> AllGeoPoints;
 
     // Location Finder Objects
     FusedLocationProviderClient fusedClient;
@@ -86,6 +94,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
 
         saveButton = findViewById(R.id.fab_send);
+        displayLocButton = findViewById(R.id.fab_display_locs);
+        // get reference of firestore db
+        db = FirebaseFirestore.getInstance();
+
+        AllGeoPoints = new ArrayList<>();
+        LocateAllRecycleBins();
 
         // get current location
         locationWizardry();
@@ -100,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
-        LocateAllRecycleBins();
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,10 +127,50 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+        displayLocButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, AllGeoPoints.toString());
+
+                if (!displayFlag) {
+                    for (GeoPoint p : AllGeoPoints) {
+                        LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng));
+
+                    }
+                    displayFlag = true;
+                }
+                else {
+                    mMap.clear();
+                    displayFlag = false;
+                }
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void LocateAllRecycleBins() {
+        db.collection("RecycleBin").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document: task.getResult()) {
 
+                        AllGeoPoints.add(document.getGeoPoint("geopoint"));
+                    }
+                }else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+
+            }
+        });
     }
 
 
@@ -166,7 +220,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Log.i(TAG, String.valueOf(requestCode));
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -193,7 +246,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    Log.i(TAG, location.toString());
+
                     currentLoc = location;
                 }
             }
@@ -245,18 +298,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
 
-                LatLng latLng = new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude());
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title("You Are Here!"));
-                return false;
-            }
-        });
     }
-
 }
-
