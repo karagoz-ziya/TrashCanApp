@@ -57,6 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class AddBinActivity extends AppCompatActivity {
 
@@ -222,7 +223,7 @@ public class AddBinActivity extends AppCompatActivity {
                 if(stringBuilder != null && photo != null) {
                     AddRecycleBinToDB(binList, description.getText().toString());
 
-                    ChangeUsersBinList();
+
                     startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
                 }
                 else {
@@ -244,17 +245,24 @@ public class AddBinActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document != null){
                     tempUser = document.toObject(User.class);
-                    Log.i(TAG, tempUser.getNameSurname());
-                    Log.i(TAG, binRefID);
+                    if (tempUser.getRecycleBinList() == null){
+                        tempBinList = new ArrayList<>();
+                        tempBinList.add(binRefID);
+                    }
+                    else {
+                        tempBinList = tempUser.getRecycleBinList();
+                       tempBinList.add(binRefID);
+                    }
+                    dbRef.document(userIDD).update("recycleBinList", tempBinList).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        }
+                    });
                 }
             }
         });
-        dbRef.document(userIDD).update("recycleBinList", tempBinList).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "DocumentSnapshot successfully updated!");
-            }
-        });
+
 
 
     }
@@ -341,7 +349,7 @@ public class AddBinActivity extends AppCompatActivity {
             public void onSuccess(DocumentReference documentReference) {
 
                 binRefID = documentReference.getId();
-
+                ChangeUsersBinList();
                 Toast.makeText(AddBinActivity.this, "Product Added", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
