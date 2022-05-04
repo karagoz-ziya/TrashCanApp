@@ -5,18 +5,26 @@
       <map>
         <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_maps.xml" value="0.10005065856129686" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1635" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_app_general_logo_background.xml" value="0.1705" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1645" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_app_logo_name.xml" value="0.1645" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_image.xml" value="0.133" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_splashscreenbg.xml" value="0.2025" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_google_sign_in.xml" value="0.2" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_home.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_maps.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_signup.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_splash.xml" value="0.134375" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/bintype_spinner.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/layout_spinner.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/popup_window.xml" value="0.264" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/layout/splash_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/mipmap-anydpi-v26/ic_app_general_logo.xml" value="0.2025" />
       </map>
     </option>
   </component>
