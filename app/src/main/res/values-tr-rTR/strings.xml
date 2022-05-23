@@ -21,4 +21,15 @@
     <string name="fab_send">Kaydet</string>
     <string name="spinner_gun_prompt">Geri Dönüşüm Kutusu Tipini Seçiniz</string>
     <string name="fab_display_locs">Konumları Görüntüle</string>
+    <string name="fab_image">Seçilen Kutunun Fotografı</string>
+    <string name="alert_map">Çöp kutusunun fotoprafını görmek ister misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayir</string>
+    <string name="OK">TAMAM</string>
+    <string name="clearAll">Hepsini Temizle</string>
+    <string name="validatePromtBin">Çöp kutusu tipi seçmek zorundasınız!</string>
+    <string name="googleSignSuccess">Başarılı Google Girişi</string>
+    <string name="title_activity_maps" translatable="false">Ana Ekran</string>
+    <string name="ERROR">HATA</string>
+    <string name="permissionDenied">Izin Reddedildi</string>
 </resources>
