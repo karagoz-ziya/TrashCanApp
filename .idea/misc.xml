@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/drawable/ic_image.xml" value="0.1" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_add_bin.xml" value="0.33" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_home.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_maps.xml" value="0.10005065856129686" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_signup.xml" value="0.17572463768115942" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/popup_window.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/layout/use_switch.xml" value="0.5" />
+        <entry key="..\:/Users/enesb/Documents/GitHub/TrashCanApp/app/src/main/res/menu/menu.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1635" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_app_general_logo_background.xml" value="0.1705" />
         <entry key="..\:/Users/ziyak/AndroidStudioProjects/TrashCanApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1645" />

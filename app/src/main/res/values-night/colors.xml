@@ -8,9 +8,8 @@
     <color name="grey_dark">#444444</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_dark">#333333</color>
 
-    <color name="background_color">#f2f2f2</color>
-    <color name="text_green">#0a4220</color>
-    <color name="hint_grey">#444444</color>
+    <color name="background_color">#333333</color>
+    <color name="text_green">#A3EBB1</color>
+    <color name="hint_grey">#B1B1B1</color>
 </resources>

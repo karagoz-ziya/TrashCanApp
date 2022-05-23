@@ -1,7 +1,5 @@
 package com.example.trashcanapp;
 
-
-
 import static com.example.trashcanapp.constants.CONSTANTS.binTypeArray;
 
 import android.Manifest;
@@ -20,19 +18,23 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -65,7 +67,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -77,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     FloatingActionButton saveButton;
     FloatingActionButton displayLocButton;
+
     private  Boolean displayFlag = false;
 
     ArrayList<GeoPoint> AllGeoPoints;
@@ -127,6 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+
         displayLocButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -21,11 +23,15 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AddBinActivity extends AppCompatActivity {
 
+
     private final String USER_ID_PREF = "USER_ID_PREF";
     private static  final String TAG = "ADD_BIN_TEST";
     private StringBuilder stringBuilder;
@@ -68,7 +75,7 @@ public class AddBinActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private Bitmap photo;
-
+    private Boolean switchFlag=false;
     String binRefID;
     String userIDD;
     User tempUser;
@@ -90,6 +97,7 @@ public class AddBinActivity extends AppCompatActivity {
     Button camera_open_id;
     ImageView click_image_id;
     GeoPoint locat;
+    Switch themeSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +116,7 @@ public class AddBinActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.submitBin);
         textView = findViewById(R.id.tv_bin);
         description = findViewById(R.id.description);
+        themeSwitch = findViewById(R.id.theme_switch);
 
         camera_open_id = findViewById(R.id.camera_button);
         click_image_id = findViewById(R.id.click_image);
@@ -222,17 +231,25 @@ public class AddBinActivity extends AppCompatActivity {
 
                 if(stringBuilder != null && photo != null) {
                     AddRecycleBinToDB(binList, description.getText().toString());
-
-
                     startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
                 }
                 else {
                     Toast.makeText(AddBinActivity.this, "Must Provide Bin Type and Photo", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
+        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
     }
 
     private void ChangeUsersBinList(){
@@ -262,9 +279,6 @@ public class AddBinActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     // This method will help to retrieve the image
@@ -279,11 +293,8 @@ public class AddBinActivity extends AppCompatActivity {
 
                 photo = (Bitmap) data.getExtras().get("data");
 
-
                 // Set the image in imageview for display
                 click_image_id.setImageBitmap(photo);
-
-
 
         }
     }
@@ -302,7 +313,6 @@ public class AddBinActivity extends AppCompatActivity {
             editor.putBoolean("isOnCamera", false);
         }
 
-
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA};
@@ -315,6 +325,7 @@ public class AddBinActivity extends AppCompatActivity {
         }else{
             ActivityCompat.requestPermissions(AddBinActivity.this, permissions, pic_id);
         }
+
     }
 
     private void AddRecycleBinToDB(ArrayList<Integer> binlist, String description) {
@@ -360,12 +371,9 @@ public class AddBinActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void allowCamera() {
         if(isCameraPermissionGranted){
             camera_open_id.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v)
                 {

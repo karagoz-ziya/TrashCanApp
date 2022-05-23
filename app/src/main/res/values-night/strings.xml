@@ -24,7 +24,6 @@
     <string name="fab_display_locs">Display Locations</string>
     <string name="Cancel">Cancel</string>
     <string name="spinner_gun_prompt">Select Bin Type</string>
-    <string name="fab_theme">fab_theme</string>
 
 
 </resources>
