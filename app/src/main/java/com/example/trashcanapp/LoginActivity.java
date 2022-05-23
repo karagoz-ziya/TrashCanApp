@@ -199,10 +199,8 @@ public class LoginActivity extends AppCompatActivity  {
 
             if(signInAccountTask.isSuccessful()){
                 // When google sign in successful
-                // Initialize string
-                String s="Google sign in successful";
                 // Display Toast
-                Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.googleSignSuccess, Toast.LENGTH_SHORT).show();
                 // Initialize sign in account
                 try {
                     // Initialize sign in account
@@ -267,7 +265,7 @@ public class LoginActivity extends AppCompatActivity  {
                 catch (ApiException e)
                 {
                     Log.wtf(TAG, String.valueOf(e));
-                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.ERROR, Toast.LENGTH_SHORT).show();
                 }
             }
 

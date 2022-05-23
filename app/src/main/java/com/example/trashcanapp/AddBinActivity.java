@@ -104,6 +104,7 @@ public class AddBinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bin);
 
+        tempUser = new User();
 
         lat = getIntent().getDoubleExtra("lat", 0);
         longt = getIntent().getDoubleExtra("longt", 0);
@@ -132,7 +133,7 @@ public class AddBinActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddBinActivity.this);
 
                 // set title
-                builder.setTitle("Select Bin Type");
+                builder.setTitle(R.string.spinner_gun_prompt);
 
                 // set dialog non cancelable
                 builder.setCancelable(false);
@@ -155,7 +156,7 @@ public class AddBinActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Initialize string builder
@@ -181,7 +182,7 @@ public class AddBinActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // dismiss dialog
@@ -189,7 +190,7 @@ public class AddBinActivity extends AppCompatActivity {
                         Log.i(TAG, binList.toString());
                     }
                 });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton(R.string.clearAll, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // use for loop
@@ -229,12 +230,12 @@ public class AddBinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(stringBuilder != null && photo != null) {
+                if(stringBuilder != null) {
                     AddRecycleBinToDB(binList, description.getText().toString());
                     startActivity(new Intent(AddBinActivity.this, MapsActivity.class));
                 }
                 else {
-                    Toast.makeText(AddBinActivity.this, "Must Provide Bin Type and Photo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddBinActivity.this, R.string.validatePromtBin, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -337,6 +338,8 @@ public class AddBinActivity extends AppCompatActivity {
         if(photo != null){
             String base64String = ImageUtil.convert(photo);
             recycleBin.setPhotograph(base64String);
+        }else {
+            recycleBin.setPhotograph("");
         }
 
         HashMap<String, Integer> binTypeTrust = recycleBin.getBinTypeTrust();
