@@ -1,7 +1,7 @@
 <resources>
     <!-- environmental variables -->
     <string name="app_name">Recycle Mapp</string>
-    <string name="title_activity_maps" translatable="false">Ana Ekran</string>
+    <string name="title_activity_maps" translatable="false">Home Screen</string>
     <string name="web_client_id" translatable="false">604683046025-isq3clcbuajbgnf6svemfkg0lnffmqs2.apps.googleusercontent.com</string>
     <!-- UI cevirileri -->
     <string name="edit_text_hint_email"> Email</string>

@@ -97,7 +97,6 @@ public class AddBinActivity extends AppCompatActivity {
     Button camera_open_id;
     ImageView click_image_id;
     GeoPoint locat;
-    Switch themeSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +116,6 @@ public class AddBinActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.submitBin);
         textView = findViewById(R.id.tv_bin);
         description = findViewById(R.id.description);
-        themeSwitch = findViewById(R.id.theme_switch);
 
         camera_open_id = findViewById(R.id.camera_button);
         click_image_id = findViewById(R.id.click_image);
@@ -240,17 +238,7 @@ public class AddBinActivity extends AppCompatActivity {
             }
         });
 
-        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
+
     }
 
     private void ChangeUsersBinList(){
