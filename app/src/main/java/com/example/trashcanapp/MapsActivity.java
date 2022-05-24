@@ -39,6 +39,9 @@ import androidx.core.content.ContextCompat;
 
 import com.example.trashcanapp.dbmodel.RecycleBin;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -59,6 +62,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -82,6 +86,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     FloatingActionButton saveButton;
     FloatingActionButton displayLocButton;
+    FloatingActionButton logoutButton;
     private  Boolean displayFlag = false;
 
     ArrayList<GeoPoint> AllGeoPoints;
@@ -92,7 +97,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationRequest mRequest;
     private LocationCallback mCallback;
     private Location currentLoc;
-
+    private GoogleSignInClient gsc;
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         currentLoc = new Location("");
@@ -101,9 +107,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         saveButton = findViewById(R.id.fab_send);
         displayLocButton = findViewById(R.id.fab_display_locs);
+        logoutButton = findViewById(R.id.fab_logout);
         // get reference of firestore db
         db = FirebaseFirestore.getInstance();
 
+        firebaseAuth=FirebaseAuth.getInstance();
+        // Initialize sign in client
+        gsc= GoogleSignIn.getClient(MapsActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
         AllGeoPoints = new ArrayList<>();
         AllBinTypeTrust = new ArrayList<>();
         LocateAllRecycleBins();
@@ -167,6 +177,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
 
+        });
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Sign out from google
+                gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Check condition
+                        if(task.isSuccessful())
+                        {
+                            // When task is successful
+                            // Sign out from firebase
+                            firebaseAuth.signOut();
+
+                            // Display Toast
+                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+
+                            // Finish activity
+                            finish();
+                            startActivity(new Intent(MapsActivity.this, LoginActivity.class));
+
+                        }
+                    }
+                });
+            }
         });
     }
 

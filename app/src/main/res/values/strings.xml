@@ -35,6 +35,7 @@
     <string name="googleSignSuccess">Successfull Google Sign In</string>
     <string name="ERROR">ERROR</string>
     <string name="permissionDenied">Permission Denied</string>
+    <string name="themeString">Theme</string>
 
 
 </resources>

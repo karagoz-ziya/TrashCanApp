@@ -77,22 +77,36 @@ public class LoginActivity extends AppCompatActivity  {
         db = FirebaseFirestore.getInstance();
         // get instance of firebase auth
 
-
+        SharedPreferences prefs = getSharedPreferences("THEME_PREF", MODE_PRIVATE);
+        Boolean temp = prefs.getBoolean("switch", false);
+        binding.themeSwitch.setChecked(temp);
+        SwitchTheme();
         GoogleSignInAction();
         FirebaseSignInAction();
 
         binding.themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
+                SwitchTheme();
             }
         });
 
+    }
+
+    private void SwitchTheme(){
+        SharedPreferences.Editor editor = getSharedPreferences("THEME_PREF", MODE_PRIVATE).edit();
+
+
+        if(binding.themeSwitch.isChecked()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putBoolean("switch", true);
+
+        }
+        else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putBoolean("switch", false);
+        }
+        editor.apply();
     }
 
     // Firebase Email ile giriş işlemlerinin yapıldığı metod

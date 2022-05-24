@@ -32,4 +32,5 @@
     <string name="title_activity_maps" translatable="false">Ana Ekran</string>
     <string name="ERROR">HATA</string>
     <string name="permissionDenied">Izin Reddedildi</string>
+    <string name="themeString">Tema</string>
 </resources>
